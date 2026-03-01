@@ -1,0 +1,14 @@
+node_modules/
+dist/
+target/
+.vite/
+*.local
+.DS_Store
+Thumbs.db
+
+# Tauri
+src-tauri/target/
+src-tauri/WixTools/
+
+# Temp files
+icon-512.png

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicosolo/tauri-apps-tauri/refs/heads/dev/crates/tauri-utils/schema.json",
+  "identifier": "default",
+  "description": "Default capabilities for Yang-MarkD",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:default",
+    "dialog:allow-open",
+    "fs:default",
+    "fs:allow-read-text-file"
+  ]
+}

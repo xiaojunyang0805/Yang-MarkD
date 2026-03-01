@@ -1,0 +1,95 @@
+/* Light theme (default) */
+:root {
+  --bg-app: #f8f7f4;
+  --bg-surface: #ffffff;
+  --bg-code: #faf9f6;
+  --bg-code-inline: #f0eee9;
+  --bg-blockquote: rgba(74, 108, 247, 0.03);
+  --bg-table-header: #f4f3f0;
+  --bg-btn: #faf9f6;
+  --bg-btn-active: rgba(74, 108, 247, 0.08);
+  --bg-drop-overlay: rgba(248, 247, 244, 0.92);
+
+  --text-primary: #2c2c2c;
+  --text-heading1: #1a1a1a;
+  --text-heading2: #2c2c2c;
+  --text-heading3: #3a3a3a;
+  --text-heading-minor: #555;
+  --text-body: #3a3a3a;
+  --text-muted: #666;
+  --text-faint: #999;
+  --text-code: #444;
+  --text-code-inline: #c7254e;
+  --text-table-header: #555;
+  --text-table-cell: #555;
+  --text-btn: #666;
+  --text-btn-active: #4a6cf7;
+  --text-filename: #555;
+  --text-stats: #aaa;
+
+  --accent: #4a6cf7;
+  --accent-hover: #3a5ce7;
+
+  --border: #e8e6e1;
+  --border-btn: #ddd;
+  --border-code: #e8e6e1;
+  --border-table: #eee;
+  --border-table-header: #ddd;
+  --border-hr: #e0ded9;
+  --border-blockquote: #4a6cf7;
+  --border-link: rgba(74, 108, 247, 0.3);
+  --border-checkbox: #ccc;
+
+  --scrollbar-thumb: #d0d0d0;
+
+  --task-done-text: #aaa;
+  --checkbox-unchecked: #bbb;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-app: #1a1a1e;
+  --bg-surface: #1e1e22;
+  --bg-code: #141416;
+  --bg-code-inline: #252528;
+  --bg-blockquote: rgba(107, 138, 253, 0.05);
+  --bg-table-header: #222225;
+  --bg-btn: #252528;
+  --bg-btn-active: rgba(107, 138, 253, 0.15);
+  --bg-drop-overlay: rgba(26, 26, 30, 0.92);
+
+  --text-primary: #d4d3cf;
+  --text-heading1: #e8e7e3;
+  --text-heading2: #d4d3cf;
+  --text-heading3: #c0bfbb;
+  --text-heading-minor: #a0a09c;
+  --text-body: #b8b7b3;
+  --text-muted: #8a8a8a;
+  --text-faint: #555;
+  --text-code: #b0afab;
+  --text-code-inline: #e0a0a0;
+  --text-table-header: #b0afab;
+  --text-table-cell: #999;
+  --text-btn: #999;
+  --text-btn-active: #6b8afd;
+  --text-filename: #b0afab;
+  --text-stats: #666;
+
+  --accent: #6b8afd;
+  --accent-hover: #7b9aff;
+
+  --border: #2a2a2e;
+  --border-btn: #333;
+  --border-code: #2a2a2e;
+  --border-table: #2a2a2e;
+  --border-table-header: #333;
+  --border-hr: #2a2a2e;
+  --border-blockquote: #6b8afd;
+  --border-link: rgba(107, 138, 253, 0.3);
+  --border-checkbox: #444;
+
+  --scrollbar-thumb: #333;
+
+  --task-done-text: #666;
+  --checkbox-unchecked: #555;
+}
