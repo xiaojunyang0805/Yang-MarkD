@@ -11,6 +11,7 @@
 ## Features
 
 - **Drag & drop** or open `.md` files via native file dialog
+- **File association** — set as default app for `.md` files and double-click to open
 - **Light / Dark** theme toggle with CSS custom properties
 - **Table of Contents** sidebar with heading navigation
 - **Font size** adjustment (12–24px)
@@ -20,8 +21,7 @@
 
 ## Screenshot
 
-<!-- Replace with an actual screenshot -->
-![Yang-MarkD screenshot](https://github.com/user-attachments/assets/placeholder)
+![Yang-MarkD screenshot](Yang-MarkD%20screenshot.png)
 
 ## Tech Stack
 

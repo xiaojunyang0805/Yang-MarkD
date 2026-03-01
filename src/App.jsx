@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import Toolbar from './components/Toolbar';
 import TableOfContents from './components/TableOfContents';
 import ContentView from './components/ContentView';
@@ -28,6 +28,23 @@ export default function App() {
 
   const { isDragging, fileInputRef, onDragOver, onDragLeave, onDrop, onInputChange, openFilePicker } =
     useFileHandler(onFileLoaded);
+
+  // Load file passed via CLI argument (e.g. double-click file association)
+  useEffect(() => {
+    (async () => {
+      try {
+        const { invoke } = await import('@tauri-apps/api/core');
+        const filePath = await invoke('get_cli_file_path');
+        if (!filePath) return;
+        const { readTextFile } = await import('@tauri-apps/plugin-fs');
+        const content = await readTextFile(filePath);
+        const name = filePath.replace(/.*[/\\]/, '');
+        onFileLoaded(content, name);
+      } catch {
+        // Not in Tauri env or no CLI arg — keep sample content
+      }
+    })();
+  }, [onFileLoaded]);
 
   const scrollToHeading = (id) => {
     const el = contentRef.current?.querySelector(`[data-heading-id="${id}"]`);
