@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/nicosolo/tauri-apps-tauri/refs/heads/dev/crates/tauri-config-schema/schema.json",
   "productName": "Yang-MarkD",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "identifier": "com.yangmarkd.app",
   "build": {
     "frontendDist": "../dist",
