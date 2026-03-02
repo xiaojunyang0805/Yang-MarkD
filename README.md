@@ -8,6 +8,17 @@
   A clean, distraction-free Markdown viewer built with <strong>Tauri v2</strong> and <strong>React</strong>.
 </p>
 
+## Download
+
+**Just want to use the app? No installation needed.**
+
+1. Go to the [**Releases page**](https://github.com/xiaojunyang0805/Yang-MarkD/releases/latest)
+2. Download **Yang-MarkD_1.0.1_x64_portable.zip** (3 MB)
+3. Extract the zip — you'll get a `Yang-MarkD` folder
+4. Double-click **`yang-markd.exe`** to run
+
+> Requires Windows 10/11 (x64). No installer, no dependencies — just extract and run.
+
 ## Features
 
 - **Drag & drop** or open `.md` files via native file dialog
@@ -33,7 +44,7 @@
 | Package manager | [bun](https://bun.sh/) |
 | Styling | CSS custom properties (no CSS-in-JS) |
 
-## Getting Started
+## Development
 
 ### Prerequisites
 
