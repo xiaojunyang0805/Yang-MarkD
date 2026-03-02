@@ -51,6 +51,15 @@ export default function App() {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const exportPdf = useCallback(() => {
+    const firstHeading = headings.find((h) => h.level === 1);
+    const title = firstHeading?.text || fileName.replace(/\.[^.]+$/, '');
+    const prev = document.title;
+    document.title = title;
+    window.print();
+    document.title = prev;
+  }, [headings, fileName]);
+
   // Apply theme to document
   document.documentElement.dataset.theme = theme;
 
@@ -83,6 +92,7 @@ export default function App() {
         onToggleRaw={() => setShowRaw(!showRaw)}
         theme={theme}
         onToggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+        onExportPdf={exportPdf}
         onOpenFile={openFilePicker}
       />
 

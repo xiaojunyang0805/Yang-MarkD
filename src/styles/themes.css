@@ -1,41 +1,41 @@
 /* Light theme (default) */
 :root {
-  --bg-app: #f8f7f4;
+  --bg-app: #ffffff;
   --bg-surface: #ffffff;
-  --bg-code: #faf9f6;
-  --bg-code-inline: #f0eee9;
+  --bg-code: #f6f6f6;
+  --bg-code-inline: #f0f0f0;
   --bg-blockquote: rgba(74, 108, 247, 0.03);
-  --bg-table-header: #f4f3f0;
-  --bg-btn: #faf9f6;
+  --bg-table-header: #f6f6f6;
+  --bg-btn: #f8f8f8;
   --bg-btn-active: rgba(74, 108, 247, 0.08);
-  --bg-drop-overlay: rgba(248, 247, 244, 0.92);
+  --bg-drop-overlay: rgba(255, 255, 255, 0.92);
 
-  --text-primary: #2c2c2c;
-  --text-heading1: #1a1a1a;
-  --text-heading2: #2c2c2c;
-  --text-heading3: #3a3a3a;
-  --text-heading-minor: #555;
-  --text-body: #3a3a3a;
-  --text-muted: #666;
-  --text-faint: #999;
-  --text-code: #444;
+  --text-primary: #000000;
+  --text-heading1: #000000;
+  --text-heading2: #000000;
+  --text-heading3: #111111;
+  --text-heading-minor: #222222;
+  --text-body: #000000;
+  --text-muted: #444444;
+  --text-faint: #888888;
+  --text-code: #111111;
   --text-code-inline: #c7254e;
-  --text-table-header: #555;
-  --text-table-cell: #555;
-  --text-btn: #666;
+  --text-table-header: #222222;
+  --text-table-cell: #333333;
+  --text-btn: #444444;
   --text-btn-active: #4a6cf7;
-  --text-filename: #555;
-  --text-stats: #aaa;
+  --text-filename: #333333;
+  --text-stats: #999999;
 
   --accent: #4a6cf7;
   --accent-hover: #3a5ce7;
 
-  --border: #e8e6e1;
+  --border: #e5e5e5;
   --border-btn: #ddd;
-  --border-code: #e8e6e1;
+  --border-code: #e5e5e5;
   --border-table: #eee;
   --border-table-header: #ddd;
-  --border-hr: #e0ded9;
+  --border-hr: #e0e0e0;
   --border-blockquote: #4a6cf7;
   --border-link: rgba(74, 108, 247, 0.3);
   --border-checkbox: #ccc;

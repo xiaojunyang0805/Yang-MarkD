@@ -10,6 +10,7 @@ export default function Toolbar({
   onToggleRaw,
   theme,
   onToggleTheme,
+  onExportPdf,
   onOpenFile,
 }) {
   const dark = theme === 'dark';
@@ -62,6 +63,14 @@ export default function Toolbar({
         title="Toggle raw markdown"
       >
         {showRaw ? 'Rich' : 'Raw'}
+      </button>
+
+      <button
+        className="btn"
+        onClick={onExportPdf}
+        title="Export as PDF"
+      >
+        PDF
       </button>
 
       <button

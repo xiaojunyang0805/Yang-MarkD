@@ -1,0 +1,96 @@
+@media print {
+  /* Hide UI chrome */
+  .toolbar,
+  .toc-sidebar,
+  .drop-overlay {
+    display: none !important;
+  }
+
+  /* Reset layout for print */
+  .app-root {
+    height: auto;
+    display: block;
+  }
+
+  .main-area {
+    display: block;
+    overflow: visible;
+  }
+
+  .content-area {
+    overflow: visible;
+    padding: 0;
+  }
+
+  .content-inner {
+    max-width: 100%;
+  }
+
+  /* Clean print typography */
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+  }
+
+  .md-content {
+    color: #000 !important;
+  }
+
+  .md-h1, .md-h2, .md-h3, .md-h4, .md-h5, .md-h6 {
+    color: #000 !important;
+    page-break-after: avoid;
+  }
+
+  .md-p, .md-li, .task-item {
+    color: #000 !important;
+  }
+
+  .md-h2 {
+    border-bottom-color: #ccc !important;
+  }
+
+  /* Avoid page breaks inside elements */
+  .code-block,
+  .md-blockquote,
+  .table-wrap,
+  .md-image {
+    page-break-inside: avoid;
+  }
+
+  /* Code blocks */
+  .code-block {
+    background: #f5f5f5 !important;
+    border-color: #ddd !important;
+    color: #000 !important;
+  }
+
+  .inline-code {
+    background: #f0f0f0 !important;
+    color: #c7254e !important;
+  }
+
+  /* Links: show URL */
+  .md-link {
+    color: #000 !important;
+    text-decoration: underline;
+    border-bottom: none !important;
+  }
+
+  .md-link::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #666;
+  }
+
+  /* Tables */
+  .md-table th,
+  .md-table td {
+    color: #000 !important;
+  }
+
+  /* Margins */
+  @page {
+    margin: 1.5cm 2cm;
+  }
+}
