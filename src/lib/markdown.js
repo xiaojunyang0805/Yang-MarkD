@@ -1,6 +1,23 @@
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
+// Base directory of the currently opened file (set when a file is opened)
+let _baseDir = '';
+
+export function setBaseDir(dir) {
+  _baseDir = dir;
+}
+
+function isAbsoluteUrl(url) {
+  return /^(https?:|data:|blob:|asset:|file:)/i.test(url);
+}
+
+function resolveImagePath(href) {
+  if (!_baseDir || !href || isAbsoluteUrl(href)) return null;
+  const base = _baseDir.replace(/\\/g, '/');
+  return base + '/' + href;
+}
+
 // Custom renderer to add class names matching the original styling
 const renderer = new marked.Renderer();
 
@@ -26,6 +43,10 @@ renderer.link = ({ href, tokens }) => {
 };
 
 renderer.image = ({ href, text }) => {
+  const absPath = resolveImagePath(href);
+  if (absPath) {
+    return `<img alt="${text}" data-file-path="${absPath}" class="md-image" />`;
+  }
   return `<img alt="${text}" src="${href}" class="md-image" />`;
 };
 
