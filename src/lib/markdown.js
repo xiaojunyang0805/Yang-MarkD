@@ -76,13 +76,12 @@ renderer.list = ({ ordered, items }) => {
 
 renderer.listitem = ({ tokens, checked }) => {
   if (checked !== undefined) {
-    const text = marked.Parser.parseInline(
-      tokens.flatMap((t) => (t.type === 'paragraph' ? t.tokens : [t]))
-    );
-    if (checked) {
-      return `<div class="task-item done"><span class="checkbox checked">✓</span>${text}</div>\n`;
-    }
-    return `<div class="task-item"><span class="checkbox">○</span>${text}</div>\n`;
+    const body = marked.Parser.parse(tokens);
+    const icon = checked
+      ? '<span class="checkbox checked">✓</span>'
+      : '<span class="checkbox">○</span>';
+    const cls = checked ? 'task-item done' : 'task-item';
+    return `<div class="${cls}">${icon}${body}</div>\n`;
   }
   const text = marked.Parser.parse(tokens);
   return `<li class="md-li">${text}</li>\n`;
