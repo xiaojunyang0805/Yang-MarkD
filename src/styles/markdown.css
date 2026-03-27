@@ -89,6 +89,17 @@
   border: 1px solid var(--border-code);
 }
 
+/* Box-drawing diagram: fixed-width character grid */
+.code-block-diagram {
+  line-height: 1.4;
+}
+
+.code-block-diagram .cc {
+  display: inline-block;
+  width: 1ch;
+  text-align: center;
+}
+
 .code-block[data-lang]:not([data-lang=""])::before {
   content: attr(data-lang);
   display: block;

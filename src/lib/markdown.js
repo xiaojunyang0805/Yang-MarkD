@@ -8,6 +8,10 @@ export function setBaseDir(dir) {
   _baseDir = dir;
 }
 
+export function getBaseDir() {
+  return _baseDir;
+}
+
 function isAbsoluteUrl(url) {
   return /^(https?:|data:|blob:|asset:|file:)/i.test(url);
 }
@@ -15,7 +19,8 @@ function isAbsoluteUrl(url) {
 function resolveImagePath(href) {
   if (!_baseDir || !href || isAbsoluteUrl(href)) return null;
   const base = _baseDir.replace(/\\/g, '/');
-  return base + '/' + href;
+  const decoded = decodeURIComponent(href);
+  return base + '/' + decoded;
 }
 
 // Custom renderer to add class names matching the original styling
@@ -39,7 +44,7 @@ renderer.paragraph = ({ tokens }) => {
 
 renderer.link = ({ href, tokens }) => {
   const text = marked.Parser.parseInline(tokens);
-  return `<a href="${href}" target="_blank" rel="noopener" class="md-link">${text}</a>`;
+  return `<a href="${href}" rel="noopener" class="md-link" data-external-link>${text}</a>`;
 };
 
 renderer.image = ({ href, text }) => {
@@ -56,6 +61,23 @@ renderer.blockquote = ({ tokens }) => {
 };
 
 renderer.code = ({ text, lang }) => {
+  const hasBoxDrawing = /[\u2500-\u257F\u2580-\u259F\u2190-\u21FF\u25A0-\u25FF]/.test(text);
+
+  if (hasBoxDrawing) {
+    // Force fixed-width character grid for ASCII art / box-drawing diagrams
+    const html = text.split('\n').map((line) => {
+      const chars = [...line].map((ch) => {
+        if (ch === ' ') return '<span class="cc">\u00A0</span>';
+        if (ch === '&') return '<span class="cc">&amp;</span>';
+        if (ch === '<') return '<span class="cc">&lt;</span>';
+        if (ch === '>') return '<span class="cc">&gt;</span>';
+        return `<span class="cc">${ch}</span>`;
+      }).join('');
+      return chars;
+    }).join('\n');
+    return `<pre class="code-block code-block-diagram" data-lang="${lang || ''}"><code>${html}</code></pre>\n`;
+  }
+
   const escaped = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')

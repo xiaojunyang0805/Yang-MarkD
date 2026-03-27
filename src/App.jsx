@@ -4,7 +4,7 @@ import TableOfContents from './components/TableOfContents';
 import ContentView from './components/ContentView';
 import DropOverlay from './components/DropOverlay';
 import { useFileHandler } from './hooks/useFileHandler';
-import { renderMarkdown, setBaseDir } from './lib/markdown';
+import { renderMarkdown, setBaseDir, getBaseDir } from './lib/markdown';
 import { extractHeadings, wordCount } from './lib/utils';
 import { SAMPLE_MD } from './sample';
 
@@ -100,16 +100,31 @@ export default function App() {
   // Load local images referenced in markdown via Tauri fs
   useEffect(() => {
     if (!contentRef.current) return;
-    const images = contentRef.current.querySelectorAll('img[data-file-path]');
-    if (images.length === 0) return;
+    const baseDir = getBaseDir();
+    const isAbsoluteUrl = (url) => /^(https?:|data:|blob:|asset:|file:)/i.test(url);
+
+    // Collect all images that need loading: both data-file-path (from markdown renderer)
+    // and raw HTML <img> tags with relative src (not yet resolved)
+    const allImages = contentRef.current.querySelectorAll('img');
+    const toLoad = [];
+    for (const img of allImages) {
+      if (img.dataset.filePath) {
+        toLoad.push({ img, filePath: img.dataset.filePath });
+      } else if (baseDir && img.getAttribute('src') && !isAbsoluteUrl(img.getAttribute('src'))) {
+        const rel = decodeURIComponent(img.getAttribute('src'));
+        const resolved = baseDir.replace(/\\/g, '/') + '/' + rel;
+        toLoad.push({ img, filePath: resolved });
+      }
+    }
+    if (toLoad.length === 0) return;
+
     const blobUrls = [];
     const mimeTypes = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', svg: 'image/svg+xml', webp: 'image/webp', bmp: 'image/bmp' };
     (async () => {
       try {
         const { readFile } = await import('@tauri-apps/plugin-fs');
-        for (const img of images) {
+        for (const { img, filePath } of toLoad) {
           try {
-            const filePath = img.dataset.filePath;
             const ext = filePath.split('.').pop().toLowerCase();
             const mime = mimeTypes[ext] || 'application/octet-stream';
             const data = await readFile(filePath);
