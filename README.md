@@ -12,12 +12,33 @@
 
 **Just want to use the app? No installation needed.**
 
-1. Go to the [**Releases page**](https://github.com/xiaojunyang0805/Yang-MarkD/releases/latest)
-2. Download **Yang-MarkD_1.0.1_x64_portable.zip** (3 MB)
-3. Extract the zip — you'll get a `Yang-MarkD` folder
-4. Double-click **`yang-markd.exe`** to run
+Go to the [**Releases page**](https://github.com/xiaojunyang0805/Yang-MarkD/releases/latest) and download for your platform:
+
+### Windows
+
+1. Download **Yang-MarkD_1.0.1_x64_portable.zip** (3 MB)
+2. Extract the zip — you'll get a `Yang-MarkD` folder
+3. Double-click **`yang-markd.exe`** to run
 
 > Requires Windows 10/11 (x64). No installer, no dependencies — just extract and run.
+
+### Linux
+
+Download one of the following:
+
+| Format | File |
+|--------|------|
+| AppImage (portable) | `yang-markd_1.0.1_amd64.AppImage` |
+| Debian/Ubuntu | `yang-markd_1.0.1_amd64.deb` |
+| Fedora/RHEL | `yang-markd-1.0.1-1.x86_64.rpm` |
+
+For the AppImage, make it executable and run:
+```bash
+chmod +x yang-markd_*.AppImage
+./yang-markd_*.AppImage
+```
+
+> Requires a Linux distribution with WebKitGTK 4.1 (Ubuntu 22.04+, Fedora 36+, etc.).
 
 ## Features
 
@@ -50,6 +71,7 @@
 
 - [bun](https://bun.sh/) (v1.0+)
 - [Rust](https://rustup.rs/) (stable)
+- **Linux only:** `libwebkit2gtk-4.1-dev`, `libgtk-3-dev`, `libayatana-appindicator3-dev`, `librsvg2-dev`
 
 ### Development
 
@@ -70,11 +92,23 @@ bun run tauri build
 
 Output files:
 
+**Windows:**
+
 | Format | Location |
 |--------|----------|
 | Standalone `.exe` | `src-tauri/target/release/yang-markd.exe` |
 | NSIS installer | `src-tauri/target/release/bundle/nsis/Yang-MarkD_*_x64-setup.exe` |
 | MSI installer | `src-tauri/target/release/bundle/msi/Yang-MarkD_*_x64_en-US.msi` |
+
+**Linux:**
+
+| Format | Location |
+|--------|----------|
+| AppImage | `src-tauri/target/release/bundle/appimage/*.AppImage` |
+| Debian package | `src-tauri/target/release/bundle/deb/*.deb` |
+| RPM package | `src-tauri/target/release/bundle/rpm/*.rpm` |
+
+> Linux builds are also available via GitHub Actions — see `.github/workflows/build-linux.yml`.
 
 ## Project Structure
 
@@ -88,7 +122,10 @@ src/
   main.jsx        Entry point
 
 src-tauri/        Tauri Rust backend
-  src/main.rs     App entry with dialog + fs plugins
+  src/main.rs     App entry with dialog, fs + opener plugins
+
+.github/workflows/  CI/CD
+  build-linux.yml   Linux build (deb, AppImage, rpm)
 ```
 
 ## License
