@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>专为 AI 生成文档设计的 Markdown 阅读器。</strong><br/>
-  仅 3 MB 的绿色免安装软件,完整呈现 Claude、ChatGPT、Copilot 写出的方框图、表格、本地 SVG 图片和中文内容。
+  仅 3 MB 的绿色免安装软件,完整呈现 DeepSeek、通义千问、Kimi、豆包等 AI 写出的方框图、表格、本地 SVG 图片和中文内容。
 </p>
 
 <p align="center">
