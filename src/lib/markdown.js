@@ -88,6 +88,9 @@ renderer.blockquote = ({ tokens }) => {
   return `<blockquote class="md-blockquote">${body}</blockquote>\n`;
 };
 
+// East Asian Wide / Fullwidth characters, which take two columns in a text grid
+const WIDE_CHAR = /[ᄀ-ᅟ⺀-〾ぁ-㏿㐀-䶿一-鿿ꀀ-꓏가-힣豈-﫿︰-﹏＀-｠￠-￦\u{1F300}-\u{1F64F}\u{1F900}-\u{1F9FF}\u{20000}-\u{3FFFD}]/u;
+
 renderer.code = ({ text, lang }) => {
   const hasBoxDrawing = /[\u2500-\u257F\u2580-\u259F\u2190-\u21FF\u25A0-\u25FF]/.test(text);
 
@@ -99,6 +102,7 @@ renderer.code = ({ text, lang }) => {
         if (ch === '&') return '<span class="cc">&amp;</span>';
         if (ch === '<') return '<span class="cc">&lt;</span>';
         if (ch === '>') return '<span class="cc">&gt;</span>';
+        if (WIDE_CHAR.test(ch)) return `<span class="cc cw">${ch}</span>`;
         return `<span class="cc">${ch}</span>`;
       }).join('');
       return chars;

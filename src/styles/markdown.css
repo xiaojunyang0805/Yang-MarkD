@@ -94,10 +94,24 @@
   line-height: 1.4;
 }
 
+/* Bundled JetBrains Mono has no box-drawing glyphs; fall back to system
+   monospace fonts that draw them single-width (generic `monospace` maps to a
+   CJK font on Chinese Windows, which draws them double-width) */
+.code-block-diagram code {
+  font-family: 'JetBrains Mono', 'Cascadia Mono', Consolas, 'DejaVu Sans Mono',
+    'Liberation Mono', Menlo, monospace;
+}
+
 .code-block-diagram .cc {
   display: inline-block;
   width: 1ch;
   text-align: center;
+  vertical-align: top;
+}
+
+/* East Asian wide characters (CJK, full-width forms) occupy two columns */
+.code-block-diagram .cc.cw {
+  width: 2ch;
 }
 
 .code-block[data-lang]:not([data-lang=""])::before {

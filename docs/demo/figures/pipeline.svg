@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="190" viewBox="0 0 760 190" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="190" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="380" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a">Release pipeline · 发布流程</text>
+  <g font-size="14" text-anchor="middle">
+    <rect x="30" y="70" width="150" height="70" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+    <text x="105" y="100" font-weight="700" fill="#9a3412">Source</text>
+    <text x="105" y="122" font-size="12" fill="#9a3412">git tag v1.0.3</text>
+    <rect x="215" y="70" width="150" height="70" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="290" y="100" font-weight="700" fill="#1e3a8a">Build</text>
+    <text x="290" y="122" font-size="12" fill="#1e3a8a">Windows · Linux</text>
+    <rect x="400" y="70" width="150" height="70" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+    <text x="475" y="100" font-weight="700" fill="#065f46">Test</text>
+    <text x="475" y="122" font-size="12" fill="#065f46">自动测试</text>
+    <rect x="585" y="70" width="150" height="70" rx="10" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="660" y="100" font-weight="700" fill="#4c1d95">Release</text>
+    <text x="660" y="122" font-size="12" fill="#4c1d95">GitHub Releases</text>
+  </g>
+  <g stroke="#2563eb" stroke-width="2" marker-end="url(#arr)">
+    <line x1="182" y1="105" x2="212" y2="105"/>
+    <line x1="367" y1="105" x2="397" y2="105"/>
+    <line x1="552" y1="105" x2="582" y2="105"/>
+  </g>
+  <text x="380" y="172" text-anchor="middle" font-size="12" fill="#64748b">Local SVG figures load next to the .md file — no server needed</text>
+</svg>

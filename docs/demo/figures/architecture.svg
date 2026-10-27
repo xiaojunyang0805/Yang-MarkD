@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#059669"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="330" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="380" y="32" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a">System architecture · 系统架构</text>
+
+  <!-- PC -->
+  <rect x="90" y="60" width="200" height="70" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="190" y="90" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">PC Software</text>
+  <text x="190" y="112" text-anchor="middle" font-size="13" fill="#475569">上位机软件</text>
+
+  <!-- Gateway -->
+  <rect x="470" y="60" width="200" height="70" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="570" y="90" text-anchor="middle" font-size="15" font-weight="700" fill="#9a3412">Gateway</text>
+  <text x="570" y="112" text-anchor="middle" font-size="13" fill="#9a3412">网关板</text>
+
+  <!-- Ethernet link -->
+  <line x1="292" y1="95" x2="466" y2="95" stroke="#2563eb" stroke-width="2" marker-end="url(#a)"/>
+  <text x="380" y="85" text-anchor="middle" font-size="12" fill="#2563eb">Ethernet · 千兆网</text>
+
+  <!-- RS-485 bus -->
+  <line x1="570" y1="130" x2="570" y2="180" stroke="#059669" stroke-width="2"/>
+  <text x="580" y="160" font-size="12" fill="#059669">RS-485</text>
+  <line x1="120" y1="180" x2="660" y2="180" stroke="#059669" stroke-width="2"/>
+  <g stroke="#059669" stroke-width="2" marker-end="url(#g)">
+    <line x1="120" y1="180" x2="120" y2="226"/>
+    <line x1="300" y1="180" x2="300" y2="226"/>
+    <line x1="480" y1="180" x2="480" y2="226"/>
+    <line x1="660" y1="180" x2="660" y2="226"/>
+  </g>
+
+  <!-- Sensors -->
+  <g font-size="14" text-anchor="middle">
+    <rect x="60" y="230" width="120" height="56" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+    <text x="120" y="256" font-weight="700" fill="#065f46">Sensor A</text>
+    <text x="120" y="275" font-size="12" fill="#065f46">传感器 A</text>
+    <rect x="240" y="230" width="120" height="56" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+    <text x="300" y="256" font-weight="700" fill="#065f46">Sensor B</text>
+    <text x="300" y="275" font-size="12" fill="#065f46">传感器 B</text>
+    <rect x="420" y="230" width="120" height="56" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+    <text x="480" y="256" font-weight="700" fill="#065f46">Sensor C</text>
+    <text x="480" y="275" font-size="12" fill="#065f46">传感器 C</text>
+    <rect x="600" y="230" width="120" height="56" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+    <text x="660" y="256" font-weight="700" fill="#065f46">Sensor D</text>
+    <text x="660" y="275" font-size="12" fill="#065f46">传感器 D</text>
+  </g>
+  <text x="380" y="314" text-anchor="middle" font-size="12" fill="#64748b">Up to 32 nodes on the RS-485 bus · 最多 32 个节点</text>
+</svg>
