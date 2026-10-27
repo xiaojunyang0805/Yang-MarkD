@@ -23,6 +23,34 @@ function resolveImagePath(href) {
   return base + '/' + decoded;
 }
 
+/**
+ * Fill in src for local images from the cache of loaded blob URLs.
+ * Handles both markdown images (data-file-path) and raw HTML <img> with a relative src.
+ * @returns {{ html: string, missing: string[] }} missing = file paths not yet loaded
+ */
+export function applyLocalImages(html, baseDir, cache) {
+  if (!html || typeof document === 'undefined') return { html, missing: [] };
+  const tpl = document.createElement('template');
+  tpl.innerHTML = html;
+  const missing = new Set();
+  for (const img of tpl.content.querySelectorAll('img')) {
+    let filePath = img.getAttribute('data-file-path');
+    const src = img.getAttribute('src');
+    if (!filePath && baseDir && src && !isAbsoluteUrl(src)) {
+      filePath = baseDir.replace(/\\/g, '/') + '/' + decodeURIComponent(src);
+      img.setAttribute('data-file-path', filePath);
+      img.removeAttribute('src');
+    }
+    if (!filePath) continue;
+    if (filePath in cache) {
+      if (cache[filePath]) img.setAttribute('src', cache[filePath]);
+    } else {
+      missing.add(filePath);
+    }
+  }
+  return { html: tpl.innerHTML, missing: [...missing] };
+}
+
 // Custom renderer to add class names matching the original styling
 const renderer = new marked.Renderer();
 

@@ -1,10 +1,10 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import Toolbar from './components/Toolbar';
 import TableOfContents from './components/TableOfContents';
 import ContentView from './components/ContentView';
 import DropOverlay from './components/DropOverlay';
 import { useFileHandler } from './hooks/useFileHandler';
-import { renderMarkdown, setBaseDir, getBaseDir } from './lib/markdown';
+import { renderMarkdown, setBaseDir, applyLocalImages } from './lib/markdown';
 import { extractHeadings, wordCount } from './lib/utils';
 import { SAMPLE_MD } from './sample';
 
@@ -15,21 +15,27 @@ export default function App() {
   const [tocOpen, setTocOpen] = useState(true);
   const [fontSize, setFontSize] = useState(16);
   const [showRaw, setShowRaw] = useState(false);
+  const [baseDir, setBaseDirState] = useState('');
+  // filePath -> blob URL ('' when the file could not be read)
+  const [imageCache, setImageCache] = useState({});
   const contentRef = useRef(null);
 
   const headings = extractHeadings(markdown);
   const stats = wordCount(markdown);
-  const renderedHtml = renderMarkdown(markdown);
+  // Local image URLs are baked into the HTML string so that re-renders
+  // (font size, TOC toggle, theme) which reset innerHTML keep the images.
+  const baseHtml = useMemo(() => renderMarkdown(markdown), [markdown, baseDir]);
+  const { html: renderedHtml, missing: missingImages } = useMemo(
+    () => applyLocalImages(baseHtml, baseDir, imageCache),
+    [baseHtml, baseDir, imageCache]
+  );
 
   const onFileLoaded = useCallback((content, name, filePath) => {
     setMarkdown(content);
     setFileName(name);
-    if (filePath) {
-      const dir = filePath.replace(/[/\\][^/\\]*$/, '');
-      setBaseDir(dir);
-    } else {
-      setBaseDir('');
-    }
+    const dir = filePath ? filePath.replace(/[/\\][^/\\]*$/, '') : '';
+    setBaseDir(dir);
+    setBaseDirState(dir);
   }, []);
 
   const { isDragging, fileInputRef, onDragOver, onDragLeave, onDrop, onInputChange, openFilePicker } =
@@ -98,50 +104,53 @@ export default function App() {
   }, [onFileLoaded]);
 
   // Load local images referenced in markdown via Tauri fs
+  const missingKey = missingImages.join('|');
   useEffect(() => {
-    if (!contentRef.current) return;
-    const baseDir = getBaseDir();
-    const isAbsoluteUrl = (url) => /^(https?:|data:|blob:|asset:|file:)/i.test(url);
-
-    // Collect all images that need loading: both data-file-path (from markdown renderer)
-    // and raw HTML <img> tags with relative src (not yet resolved)
-    const allImages = contentRef.current.querySelectorAll('img');
-    const toLoad = [];
-    for (const img of allImages) {
-      if (img.dataset.filePath) {
-        toLoad.push({ img, filePath: img.dataset.filePath });
-      } else if (baseDir && img.getAttribute('src') && !isAbsoluteUrl(img.getAttribute('src'))) {
-        const rel = decodeURIComponent(img.getAttribute('src'));
-        const resolved = baseDir.replace(/\\/g, '/') + '/' + rel;
-        toLoad.push({ img, filePath: resolved });
-      }
-    }
-    if (toLoad.length === 0) return;
-
-    const blobUrls = [];
+    if (missingImages.length === 0) return;
     const mimeTypes = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', gif: 'image/gif', svg: 'image/svg+xml', webp: 'image/webp', bmp: 'image/bmp' };
     (async () => {
+      let readFile = null;
       try {
-        const { readFile } = await import('@tauri-apps/plugin-fs');
-        for (const { img, filePath } of toLoad) {
-          try {
-            const ext = filePath.split('.').pop().toLowerCase();
-            const mime = mimeTypes[ext] || 'application/octet-stream';
-            const data = await readFile(filePath);
-            const blob = new Blob([data], { type: mime });
-            const url = URL.createObjectURL(blob);
-            blobUrls.push(url);
-            img.src = url;
-          } catch {
-            // Image file not found or unreadable
-          }
-        }
+        ({ readFile } = await import('@tauri-apps/plugin-fs'));
       } catch {
         // Not in Tauri env
       }
+      const loaded = {};
+      for (const filePath of missingImages) {
+        try {
+          const ext = filePath.split('.').pop().toLowerCase();
+          const mime = mimeTypes[ext] || 'application/octet-stream';
+          const data = await readFile(filePath);
+          loaded[filePath] = URL.createObjectURL(new Blob([data], { type: mime }));
+        } catch {
+          // Image file not found or unreadable — remember so we don't retry
+          loaded[filePath] = '';
+        }
+      }
+      setImageCache((prev) => {
+        const next = { ...prev };
+        for (const [path, url] of Object.entries(loaded)) {
+          if (path in next) {
+            if (url) URL.revokeObjectURL(url); // already loaded by a concurrent run
+          } else {
+            next[path] = url;
+          }
+        }
+        return next;
+      });
     })();
-    return () => blobUrls.forEach(URL.revokeObjectURL);
-  }, [renderedHtml]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [missingKey]);
+
+  // Release blob URLs when a different folder's file is opened
+  useEffect(() => {
+    return () => {
+      setImageCache((prev) => {
+        Object.values(prev).forEach((url) => url && URL.revokeObjectURL(url));
+        return {};
+      });
+    };
+  }, [baseDir]);
 
   const scrollToHeading = (id) => {
     const el = contentRef.current?.querySelector(`[data-heading-id="${id}"]`);
