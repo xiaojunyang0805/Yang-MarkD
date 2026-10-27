@@ -16,7 +16,7 @@ Go to the [**Releases page**](https://github.com/xiaojunyang0805/Yang-MarkD/rele
 
 ### Windows
 
-1. Download **Yang-MarkD_1.0.1_x64_portable.zip** (3 MB)
+1. Download **Yang-MarkD_1.0.3_x64_portable.zip** (3 MB)
 2. Extract the zip — you'll get a `Yang-MarkD` folder
 3. Double-click **`yang-markd.exe`** to run
 
@@ -28,9 +28,9 @@ Download one of the following:
 
 | Format | File |
 |--------|------|
-| AppImage (portable) | `yang-markd_1.0.1_amd64.AppImage` |
-| Debian/Ubuntu | `yang-markd_1.0.1_amd64.deb` |
-| Fedora/RHEL | `yang-markd-1.0.1-1.x86_64.rpm` |
+| AppImage (portable) | `yang-markd_1.0.3_amd64.AppImage` |
+| Debian/Ubuntu | `yang-markd_1.0.3_amd64.deb` |
+| Fedora/RHEL | `yang-markd-1.0.3-1.x86_64.rpm` |
 
 For the AppImage, make it executable and run:
 ```bash
